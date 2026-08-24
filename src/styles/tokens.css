@@ -1,0 +1,24 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: #0a0a0a;
+  --bg-surface: #121212;
+  --bg-surface-hover: #1a1a1a;
+  
+  /* Text */
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-muted: #666666;
+  
+  /* Accents */
+  --accent-primary: #00ff9d;   /* vert terminal */
+  --accent-secondary: #ff6b35; /* orange, pour warnings/highlights */
+  --accent-danger: #ff4444;
+  
+  /* Borders */
+  --border-default: #2a2a2a;
+  --border-hover: #3a3a3a;
+  
+  /* Fonts */
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
