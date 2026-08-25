@@ -2,7 +2,7 @@
 
 Portfolio personnel présentant mon parcours, mes compétences et mes projets en développement web.
 
-🔗 **Live demo :** [ton-url.vercel.app](portfolio-mustafa-wheat.vercel.app)
+🔗 **Live demo :** [portfolio-mustafa-wheat.vercel.app](portfolio-mustafa-wheat.vercel.app)
 
 ## 🚀 Aperçu
 
