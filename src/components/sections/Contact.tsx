@@ -1,9 +1,12 @@
 // components/sections/Contact.tsx
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import type { ContactFormData } from '../../lib/contact'
 import { validateForm } from '../../lib/contact'
+import { useScrollAnimation } from '../../lib/animation'
+import { PageNav } from '../ui/PageNav'
+
 export const Contact = () => {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useScrollAnimation()
   const formRef = useRef<HTMLFormElement>(null)
 
   const [formData, setFormData] = useState<ContactFormData>({
@@ -18,45 +21,19 @@ export const Contact = () => {
   const [success, setSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in')
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
-    // Clear error when user starts typing
+    setFormData((prev) => ({ ...prev, [name]: value }))
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }))
+      setErrors((prev) => ({ ...prev, [name]: '' }))
     }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     const validation = validateForm(formData)
-
     if (!validation.valid) {
       setErrors(validation.errors)
       return
@@ -65,12 +42,9 @@ export const Contact = () => {
     setLoading(true)
 
     try {
-      // Envoyer directement à Formspree
       const response = await fetch('https://formspree.io/f/meajbjla', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -88,13 +62,11 @@ export const Contact = () => {
       setFormData({ name: '', email: '', subject: '', message: '' })
       setErrors({})
 
-      // Reset success message après 5s
       setTimeout(() => {
         setSuccess(false)
         setSuccessMessage('')
       }, 5000)
 
-      // Scroll to top of form
       formRef.current?.scrollIntoView({ behavior: 'smooth' })
     } catch (error) {
       setErrors({
@@ -108,37 +80,28 @@ export const Contact = () => {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen flex items-center justify-center px-4 py-20 opacity-0"
+      className="min-h-screen flex items-center justify-center px-4 py-20 opacity-0 bg-black relative"
     >
-      <div className="max-w-2xl w-full">
-        {/* Header */}
+      <PageNav />
+
+      <div className="max-w-2xl w-full font-mono">
         <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-2 text-neutral-900 dark:text-neutral-100">
-            Contact
-          </h2>
-          <div className="h-1 w-16 bg-neutral-900 dark:bg-neutral-100"></div>
-          <p className="text-neutral-600 dark:text-neutral-400 mt-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-2 text-white">Contact</h2>
+          <div className="h-1 w-16 bg-cyan-400"></div>
+          <p className="text-slate-400 mt-4">
             Vous avez un projet en tête ? N'hésitez pas à me contacter !
           </p>
         </div>
 
-        {/* Success Message */}
         {success && (
-          <div className="mb-6 p-4 border-2 border-green-500 bg-green-50 dark:bg-green-950 rounded-sm">
-            <p className="text-green-700 dark:text-green-300 font-semibold">
-              {successMessage}
-            </p>
+          <div className="mb-6 p-4 border-2 border-green-500 bg-green-950/30 rounded-sm">
+            <p className="text-green-400 font-semibold">{successMessage}</p>
           </div>
         )}
 
-        {/* Form */}
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-          {/* Name Field */}
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2"
-            >
+            <label htmlFor="name" className="block text-sm font-semibold text-slate-200 mb-2">
               Nom
             </label>
             <input
@@ -147,23 +110,16 @@ export const Contact = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border-2 rounded-sm bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none transition-colors duration-200 ${errors.name
-                  ? 'border-red-500 dark:border-red-500'
-                  : 'border-neutral-300 dark:border-neutral-700 focus:border-neutral-900 dark:focus:border-neutral-100'
-                }`}
+              className={`w-full px-4 py-3 border-2 rounded-sm bg-slate-950 text-white focus:outline-none transition-colors duration-200 ${
+                errors.name ? 'border-red-500' : 'border-slate-700 focus:border-cyan-400'
+              }`}
               placeholder="Votre nom"
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-            )}
+            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
           </div>
 
-          {/* Email Field */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2"
-            >
+            <label htmlFor="email" className="block text-sm font-semibold text-slate-200 mb-2">
               Email
             </label>
             <input
@@ -172,23 +128,16 @@ export const Contact = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border-2 rounded-sm bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none transition-colors duration-200 ${errors.email
-                  ? 'border-red-500 dark:border-red-500'
-                  : 'border-neutral-300 dark:border-neutral-700 focus:border-neutral-900 dark:focus:border-neutral-100'
-                }`}
+              className={`w-full px-4 py-3 border-2 rounded-sm bg-slate-950 text-white focus:outline-none transition-colors duration-200 ${
+                errors.email ? 'border-red-500' : 'border-slate-700 focus:border-cyan-400'
+              }`}
               placeholder="votre.email@exemple.com"
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-            )}
+            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Subject Field */}
           <div>
-            <label
-              htmlFor="subject"
-              className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2"
-            >
+            <label htmlFor="subject" className="block text-sm font-semibold text-slate-200 mb-2">
               Sujet
             </label>
             <input
@@ -197,23 +146,16 @@ export const Contact = () => {
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border-2 rounded-sm bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none transition-colors duration-200 ${errors.subject
-                  ? 'border-red-500 dark:border-red-500'
-                  : 'border-neutral-300 dark:border-neutral-700 focus:border-neutral-900 dark:focus:border-neutral-100'
-                }`}
+              className={`w-full px-4 py-3 border-2 rounded-sm bg-slate-950 text-white focus:outline-none transition-colors duration-200 ${
+                errors.subject ? 'border-red-500' : 'border-slate-700 focus:border-cyan-400'
+              }`}
               placeholder="Sujet du message"
             />
-            {errors.subject && (
-              <p className="text-red-500 text-sm mt-1">{errors.subject}</p>
-            )}
+            {errors.subject && <p className="text-red-400 text-sm mt-1">{errors.subject}</p>}
           </div>
 
-          {/* Message Field */}
           <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2"
-            >
+            <label htmlFor="message" className="block text-sm font-semibold text-slate-200 mb-2">
               Message
             </label>
             <textarea
@@ -222,59 +164,51 @@ export const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               rows={6}
-              className={`w-full px-4 py-3 border-2 rounded-sm bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 focus:outline-none transition-colors duration-200 resize-none ${errors.message
-                  ? 'border-red-500 dark:border-red-500'
-                  : 'border-neutral-300 dark:border-neutral-700 focus:border-neutral-900 dark:focus:border-neutral-100'
-                }`}
+              className={`w-full px-4 py-3 border-2 rounded-sm bg-slate-950 text-white focus:outline-none transition-colors duration-200 resize-none ${
+                errors.message ? 'border-red-500' : 'border-slate-700 focus:border-cyan-400'
+              }`}
               placeholder="Votre message..."
             />
-            {errors.message && (
-              <p className="text-red-500 text-sm mt-1">{errors.message}</p>
-            )}
+            {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
           </div>
 
-          {/* Submit Error */}
           {errors.submit && (
-            <div className="p-4 border-2 border-red-500 bg-red-50 dark:bg-red-950 rounded-sm">
-              <p className="text-red-700 dark:text-red-300 font-semibold">
-                {errors.submit}
-              </p>
+            <div className="p-4 border-2 border-red-500 bg-red-950/30 rounded-sm">
+              <p className="text-red-400 font-semibold">{errors.submit}</p>
             </div>
           )}
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-900 font-semibold rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-6 py-3 bg-cyan-400 text-black font-semibold rounded-sm hover:bg-cyan-300 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Envoi en cours...' : 'Envoyer le message'}
           </button>
         </form>
 
-        {/* Info Links */}
-        <div className="mt-12 pt-8 border-t-2 border-neutral-200 dark:border-neutral-800 space-y-4">
-          <p className="text-neutral-600 dark:text-neutral-400">Ou contactez-moi directement :</p>
+        <div className="mt-12 pt-8 border-t-2 border-slate-800 space-y-4">
+          <p className="text-slate-400">Ou contactez-moi directement :</p>
           <div className="flex flex-col sm:flex-row gap-4">
             <a
-              href="mailto:your.email@example.com"
-              className="text-neutral-900 dark:text-neutral-100 font-semibold hover:underline"
+              href="mailto:mustafatopalpro@gmail.com"
+              className="text-slate-200 font-semibold hover:text-cyan-400 transition-colors"
             >
-              📧 your.email@example.com
+              📧 mustafatopalpro@gmail.com
             </a>
             <a
-              href="https://github.com/yourprofile"
+              href="https://github.com/MustafaTopal28"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-900 dark:text-neutral-100 font-semibold hover:underline"
+              className="text-slate-200 font-semibold hover:text-cyan-400 transition-colors"
             >
               🐙 GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yourprofile"
+              href="https://www.linkedin.com/in/mustafa-topal-professional"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-900 dark:text-neutral-100 font-semibold hover:underline"
+              className="text-slate-200 font-semibold hover:text-cyan-400 transition-colors"
             >
               💼 LinkedIn
             </a>

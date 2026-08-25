@@ -4,12 +4,12 @@ import { Contact } from '../components/sections/Contact'
 
 export const ContactPage = () => {
   return (
-    <div className="bg-white dark:bg-black min-h-screen">
+    <div className="bg-black min-h-screen">
       {/* Back link */}
       <div className="pt-6 px-6 max-w-2xl mx-auto">
-        <Link 
-          to="/" 
-          className="text-sm font-semibold text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+        <Link
+          to="/"
+          className="text-sm font-mono font-semibold text-slate-400 hover:text-cyan-400 transition-colors"
         >
           ← Accueil
         </Link>

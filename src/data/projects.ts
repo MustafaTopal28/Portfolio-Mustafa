@@ -25,6 +25,7 @@ export interface Project {
   team?: string // Ex: "3 personnes"
   highlights?: string[] // Points clés du projet
   links?: ProjectLinks
+  images?: string[] // Screenshots du projet pour la page détail
 }
 
 // ============================================
@@ -95,6 +96,11 @@ export const projects: Project[] = [
       // repo: 'https://gitlab.com/...',
       // live: 'https://...',
     },
+    images: [
+      // '/projects/letmecook/screenshot-1.jpg',
+      // '/projects/letmecook/screenshot-2.jpg',
+      // '/projects/letmecook/screenshot-3.jpg',
+    ],
   },
 
   {
@@ -133,6 +139,10 @@ export const projects: Project[] = [
     links: {
       repo: 'https://github.com/tonusername/yt-to-x',
     },
+    images: [
+      // '/projects/yt-to-x/screenshot-1.png',
+      // '/projects/yt-to-x/screenshot-2.png',
+    ],
   },
 
   // ─────────────────────────────────────────
@@ -174,6 +184,9 @@ export const projects: Project[] = [
       'Tests unitaires avec Jest',
       'Travail en équipe agile',
     ],
+    images: [
+      // '/projects/kids-books-shop/screenshot-1.png',
+    ],
   },
 
   // ─────────────────────────────────────────
@@ -208,6 +221,9 @@ export const projects: Project[] = [
     links: {
       repo: 'https://github.com/MustafaTopal28/SudokuJava',
     },
+    images: [
+      // '/projects/sudoku-java/screenshot-1.png',
+    ],
   },
 ]
 
