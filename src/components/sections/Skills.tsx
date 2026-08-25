@@ -46,52 +46,52 @@ export const Skills = () => {
               <h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200 mb-6">
                 {category}
               </h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {skills
                   .filter((skill) => skill.category === category)
-                  .map((skill, index) => (
-                    <div
-                      key={skill.name}
-                      ref={(el) => {
-                        itemsRef.current[index] = el
-                      }}
-                      className="opacity-0 p-4 border-2 border-neutral-300 dark:border-neutral-700 rounded-sm hover:border-neutral-600 dark:hover:border-neutral-400 transition-all duration-300 hover:shadow-lg dark:hover:shadow-neutral-900/50 bg-white dark:bg-neutral-950"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-semibold text-neutral-900 dark:text-neutral-100">
-                          {skill.name}
-                        </h4>
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{
-                            backgroundColor: getTechColor(skill.name),
-                          }}
-                        ></div>
-                      </div>
+                  .map((skill, index) => {
+                    const techColor = getTechColor(skill.name)
 
-                      <div className="w-full bg-neutral-200 dark:bg-neutral-800 h-2 rounded-sm overflow-hidden">
-                        <div
-                          className="h-full transition-all duration-500"
-                          style={{
-                            width: `${
-                              {
-                                beginner: '25%',
-                                intermediate: '50%',
-                                advanced: '75%',
-                                expert: '100%',
-                              }[skill.level]
-                            }`,
-                            backgroundColor: getTechColor(skill.name),
-                          }}
-                        ></div>
-                      </div>
+                    return (
+                      <div
+                        key={skill.name}
+                        ref={(el) => {
+                          itemsRef.current[index] = el
+                        }}
+                        className="opacity-0 p-4 border-2 border-neutral-300 dark:border-neutral-700 rounded-sm hover:border-neutral-600 dark:hover:border-neutral-400 transition-all duration-300 hover:shadow-lg dark:hover:shadow-neutral-900/50 bg-white dark:bg-neutral-950"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-semibold text-neutral-900 dark:text-neutral-100">
+                            {skill.name}
+                          </h4>
+                          <div
+                            className={`w-3 h-3 rounded-full ${techColor.bg} border ${techColor.border}`}
+                          ></div>
+                        </div>
 
-                      <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-2">
-                        {levelLabels[skill.level]}
-                      </p>
-                    </div>
-                  ))}
+                        <div className="w-full bg-neutral-200 dark:bg-neutral-800 h-2 rounded-sm overflow-hidden">
+                          <div
+                            className={`h-full transition-all duration-500 ${techColor.bg}`}
+                            style={{
+                              width: `${
+                                {
+                                  beginner: '25%',
+                                  intermediate: '50%',
+                                  advanced: '75%',
+                                  expert: '100%',
+                                }[skill.level]
+                              }`,
+                            }}
+                          ></div>
+                        </div>
+
+                        <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-2">
+                          {levelLabels[skill.level]}
+                        </p>
+                      </div>
+                    )
+                  })}
               </div>
             </div>
           ))}
