@@ -48,23 +48,26 @@ export const About = () => {
           </div>
 
           <p className="text-lg text-slate-300 leading-relaxed">
-            Développeur passionné par la création d'expériences web modernes et performantes. 
-            Je combine design épuré et architecture technique solide pour construire des 
-            applications qui font la différence.
+            Développeur en formation, passionné par la création d'expériences web modernes.
+            J'aime comprendre comment les choses fonctionnent en profondeur, et construire
+            des projets qui me permettent de mettre en pratique ce que j'apprends.
           </p>
 
           <p className="text-lg text-slate-300 leading-relaxed">
-            Spécialisé en{' '}
+            Je m'intéresse particulièrement au{' '}
             <span className="font-semibold text-cyan-400">
               frontend moderne
-            </span>
-            , j'aime explorer les dernières technologies tout en gardant un focus sur la 
-            performance et l'accessibilité.
+            </span>{' '}
+            (React, TypeScript), mais j'ai également travaillé côté back-end en formation
+            (NestJS, Prisma) lors d'un projet d'équipe de plusieurs mois. J'attache une
+            grande importance à l'expérience utilisateur.
           </p>
 
           <p className="text-lg text-slate-300 leading-relaxed">
-            Actuellement en formation pour approfondir mes compétences en full-stack, 
-            je travaille sur des projets ambitieux qui me permettent de repousser mes limites.
+            À la recherche de ma première expérience professionnelle en développement web,
+            je continue de monter en compétences à travers des projets concrets comme
+            celui-ci — pensé à la fois comme une vitrine et comme un vrai exercice technique.
+            Prochaine étape : y intégrer un back-end fonctionnel pour aller plus loin.
           </p>
 
           <div className="pt-4 space-y-2">
@@ -75,7 +78,7 @@ export const About = () => {
               <span className="font-semibold text-slate-200">🎓 Formation :</span> ALT (en cours)
             </p>
             <p className="text-sm text-slate-400">
-              <span className="font-semibold text-slate-200">💡 Passion :</span> Web 
+              <span className="font-semibold text-slate-200">💡 Passion :</span> Web
             </p>
           </div>
         </div>
