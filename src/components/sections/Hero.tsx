@@ -1,5 +1,6 @@
 // components/sections/Hero.tsx
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const TERMINAL_LINES = [
     { text: '> whoami', delay: 0 },
@@ -58,19 +59,19 @@ export const Hero = () => {
 
                     {/* CTAs */}
                     <div className="flex flex-wrap gap-4">
-                        <a
-                            href="/projects"
+                        <Link
+                            to="/projects"
                             className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-slate-200 transition-all duration-300 hover:gap-4"
                         >
                             Voir mes projets
                             <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
-                        </a>
-                        <a
-                            href="/contact"
+                        </Link>
+                        <Link
+                            to="/contact"
                             className="inline-flex items-center gap-3 px-8 py-4 border border-slate-700 text-white font-semibold rounded-lg hover:bg-slate-900/50 transition-all duration-300"
                         >
                             Me contacter
-                        </a>
+                        </Link>
                     </div>
                 </div>
 
